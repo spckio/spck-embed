@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{=d.heading}}</title>
+  {{?d.js.name}}
+  <!-- {{=d.js.name}} -->{{
+  }}{{~d.js.scripts :jsrc}}
+  <script src="{{=jsrc}}"></script>{{~}}
+  {{=d.js.headTemplate(d)}}{{?}}{{
+
+  }}{{?d.css.name}}
+  <!-- {{=d.css.name}} -->{{
+  }}{{~d.css.scripts :csrc}}
+  <script src="{{=csrc}}"></script>{{~}}{{
+  }}{{~d.css.links :href}}
+  <link rel="stylesheet" href="{{=href}}">{{~}}{{?}}{{
+  }}{{?d.stylesheets.length}}
+
+  <!-- Custom Styles -->{{
+  }}{{~d.stylesheets :stylesheet}}
+  <link rel="stylesheet" href="{{=stylesheet.path}}">{{
+  }}{{~}}{{?}}
+</head>
+
+<body>
+  {{=d.js.bodyTemplate(d)}}
+  <!-- Project -->{{
+  }}{{~d.files :file}}{{
+  }}{{?file.include}}
+  <script src="{{=file.path}}"></script>{{
+  }}{{?}}{{
+  }}{{~}}
+</body>
+</html>

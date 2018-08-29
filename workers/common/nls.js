@@ -1,0 +1,1 @@
+define("vscode-nls",function(){return{loadMessageBundle:function(){return function(n,e){return e}}}});
