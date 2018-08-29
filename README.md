@@ -11,7 +11,7 @@
 
 ## Usage
 
-1. Create an `iframe` element:
+### 1. Create an `iframe` element:
 
 index.html
 ```html
@@ -20,9 +20,9 @@ index.html
 
 *Make sure `src` is exactly `https://spck.io/embed/` or problems with https may occur. Certain cosmetic features can be configured with the url, see below.*
 
-2. Load this library. You have the following options:
+### 2. Load this library. You have the following options:
 
-Browser Global
+#### Browser Global
 ```javascript
 var editor = new SpckEditor('#editor');
 
@@ -36,7 +36,7 @@ editor.connect(function () {
 <script src="spck-embed.js"></script>
 ```
 
-AMD
+#### AMD
 ```javascript
 define(['SpckEditor'] , function (SpckEditor) {
   var editor = new SpckEditor('#editor');
@@ -47,7 +47,7 @@ define(['SpckEditor'] , function (SpckEditor) {
 });
 ```
 
-CommonJS
+#### CommonJS
 ```javascript
 var SpckEditor = require('SpckEditor');
 var editor = new SpckEditor('#editor');
@@ -57,7 +57,7 @@ editor.connect(function () {
 });
 ```
 
-*Experimental: ES2015 Modules (after npm install)*
+#### *Experimental: ES2015 Modules (after npm install)*
 ```javascript
 import {SpckEditor} from 'spck-embed';
 
@@ -71,7 +71,7 @@ editor.connect(function () {
 
 ## API Reference
 
-### SpckEditor Url
+### SpckEditor URL
 
 Certain cosmetic features can be set by the iframe's `src` url by using query parameters.
 
@@ -96,7 +96,7 @@ new SpckEditor(element, origin)
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
 |`element`|No|Either a CSS selector string or the `iframe` HTMLElement to connect to.|
-|`origin`|Yes|String to specify another domain origin for the editor. (Defaults to `https://spck.io`)|
+|`origin`|Yes|String to specify another domain origin for the editor. (*Defaults to `https://spck.io`*)|
 
 ### SpckEditor Methods
 
@@ -108,7 +108,7 @@ connect(successCallback: Function, errorCallback: Function, options: Object): vo
 |:--- |:--- |:--- |
 |`successCallback`|Yes|Handles when editor successfully connects. Editor has fully initialized. First argument is number of tries it took to connect.|
 |`errorCallback`|Yes|Handles when editor fails to connect. Something wrong has occurred. Either browser does not support some features used or problems with domain or security. If provided, an error would not be thrown on failure, instead the error object would be passed to this callback.|
-|`options`|Yes|Defines `maxTries` (default 10), `interval` (default 500ms) for connecting to the iframe.|
+|`options`|Yes|Defines `maxTries` (*default: 10*), `interval` (*default: 500ms*) for connecting to the iframe.|
 
 ```javascript
 configure(config: Object): void
