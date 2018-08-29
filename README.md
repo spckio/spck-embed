@@ -57,7 +57,7 @@ editor.connect(function () {
 });
 ```
 
-#### *Experimental: ES2015 Modules (after npm install)*
+#### ES2015 Modules (after npm install)
 ```javascript
 import {SpckEditor} from 'spck-embed';
 
