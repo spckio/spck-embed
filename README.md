@@ -91,7 +91,7 @@ Certain cosmetic features can be set by the iframe's `src` url by using query pa
 
 ```javascript
 new SpckEditor(element, origin)
-````
+```
 
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
@@ -102,7 +102,7 @@ new SpckEditor(element, origin)
 
 ```javascript
 connect(successCallback: Function, errorCallback: Function, options: Object): void
-````
+```
 
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
@@ -112,7 +112,7 @@ connect(successCallback: Function, errorCallback: Function, options: Object): vo
 
 ```javascript
 configure(config: Object): void
-````
+```
 
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
@@ -149,7 +149,7 @@ editor.configure({
 
 ```javascript
 getText(callback: Function): void
-````
+```
 
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
