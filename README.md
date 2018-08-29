@@ -15,10 +15,10 @@
 
 index.html
 ```html
-<iframe id="editor" src="https://spck.io/embed/" frameBorder="0" width="600" height="360"></iframe>
+<iframe id="editor" src="https://embed.spck.io/" frameBorder="0" width="600" height="360"></iframe>
 ```
 
-*Make sure `src` is exactly `https://spck.io/embed/` or problems with https may occur. Certain cosmetic features can be configured with the url, see below.*
+*Make sure `src` is exactly `https://embed.spck.io/` or problems with https may occur. Certain cosmetic features can be configured with the url, see below.*
 
 ### 2. Load this library. You have the following options:
 
@@ -84,7 +84,7 @@ Certain cosmetic features can be set by the iframe's `src` url by using query pa
 #### Example
 
 ```html
-<iframe src="https://spck.io/embed/?files=1&preview=1&theme=dracula"></iframe>
+<iframe src="https://embed.spck.io/?files=1&preview=1&theme=dracula"></iframe>
 ```
 
 ### SpckEditor constructor
@@ -96,7 +96,7 @@ new SpckEditor(element, origin)
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
 |`element`|No|Either a CSS selector string or the `iframe` HTMLElement to connect to.|
-|`origin`|Yes|String to specify another domain origin for the editor. (*Defaults to `https://spck.io`*)|
+|`origin`|Yes|String to specify another domain origin for the editor. (*Defaults to `https://embed.spck.io`*)|
 
 ### SpckEditor Methods
 

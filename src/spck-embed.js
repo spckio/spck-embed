@@ -17,7 +17,7 @@ var SpckEditor = function (element, origin) {
     throw new Error('Argument "element" must be an IFRAME element.');
   }
 
-  this.origin = origin || 'https://spck.io';
+  this.origin = origin || 'https://embed.spck.io';
 
   function isNode(o) {
     return (

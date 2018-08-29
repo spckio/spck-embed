@@ -5,7 +5,8 @@
   "module": "dist/index.js",
   "main": "dist/spck-embed.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gh-pages": "gh-pages -d builds/latest"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,8 @@
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.1",
     "gulp-umd": "^2.0.0",
-    "pump": "^3.0.0"
+    "pump": "^3.0.0",
+    "gh-pages": "^1.2.0"
   },
   "dependencies": {}
 }
