@@ -39,7 +39,7 @@ var SpckEditor = function (element, origin) {
 SpckEditor.prototype = {
   connect: function (successCallback, errorCallback, options) {
     options = options || {};
-    var maxTries = options.maxTries || 10;
+    var maxTries = options.maxTries || 30;
     var interval = options.interval || 500;
     var origin = this.origin;
     var contentWindow = this.contentWindow;
