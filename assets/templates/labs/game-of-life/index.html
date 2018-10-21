@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>D3</title>
+  
+  <!-- D3 -->
+  <script src="//cdn.jsdelivr.net/npm/d3@5.5.0/dist/d3.min.js"></script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@1.0.0/build/pure-min.min.css">
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <div id="panel">
+    <form class="pure-form">
+      <label>Patterns</label>
+      <select>
+        <option value="gosper">Gosper</option>
+        <option value="beacon">Beacon</option>
+        <option value="pulsar">Pulsar</option>
+      </select>
+      <button type="button" class="pure-button pure-button-primary">Randomise</button>
+    </form>
+  </div>
+  <div class="svg-container" id="example" style="max-width: 960px"></div>
+  
+  <!-- Project -->
+  <script src="index.js"></script>
+</body>
+</html>

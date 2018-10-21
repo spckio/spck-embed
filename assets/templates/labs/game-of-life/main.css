@@ -1,0 +1,10 @@
+body {
+  margin: 0
+}
+
+#panel {
+  background-color: rgba(245,245,245,0.8);
+  padding: 5px;
+  position: absolute;
+  display: block;
+}

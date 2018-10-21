@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>Fabric Brush</title>
+
+    <link rel="stylesheet" href="stylesheets/normalize.css">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      body {
+        -webkit-user-select: none;
+      }
+
+      .canvas-container {
+        height: 100% !important;
+        left: 0;
+        overflow: hidden;
+        position: absolute !important;
+        top: 0;
+        width: 100% !important;
+        z-index: -1;
+        -webkit-user-select: initial !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <canvas id="fabric-brush-demo"></canvas>
+    </div>
+    <script>
+      window.onload = function() {
+        window.brush = null;
+        var canvas = new fabric.Canvas("fabric-brush-demo", {
+          isDrawingMode: true,
+          allowTouchScrolling: false,
+          hoverCursor: "pointer",
+          selection: false
+        })
+        .setWidth(window.screen.width)
+        .setHeight(window.screen.height);
+
+        window.canvas = canvas;
+
+        function setupBrush(brushName, opt) {
+          canvas.freeDrawingBrush = new fabric[brushName](canvas, opt || {});
+        }
+
+        var gui = new dat.GUI();
+        gui.brushType = "InkBrush";
+        gui.brushWidth = 30;
+        gui.brushOpacity = 1;
+        gui.inkAmount = 7;
+        gui.brushColor = "#ff0000";
+
+        setupBrush(gui.brushType, {
+          width: gui.brushWidth,
+          opacity: gui.brushOpacity,
+          inkAmount: gui.inkAmount,
+          color: gui.brushColor
+        });
+
+        gui.clear = function(){
+          canvas.clearContext(canvas.contextTop);
+        }
+        gui.save = function() {
+          var dataURL = canvas.contextTop.canvas.toDataURL("image/png");
+          window.open(dataURL);
+        }
+
+        gui.add(gui, "brushType", ["CrayonBrush", "InkBrush", "MarkerBrush", "SprayBrush"])
+        .onFinishChange(setupBrush);
+        gui.add(gui, "brushWidth", 10, 100).step(5)
+          .onChange(function(value) {
+            canvas.freeDrawingBrush.width = value;
+          });
+        gui.addColor(gui, "brushColor")
+          .onChange(function(value) {
+            canvas.freeDrawingBrush.changeColor(value);
+          });
+        gui.add(gui, "brushOpacity", 0.1, 1).step(0.1)
+          .onChange(function(value) {
+            canvas.freeDrawingBrush.changeOpacity(value);
+          });
+        gui.add(gui, "inkAmount", 1, 10).step(0.1)
+          .onChange(function(value) {
+            canvas.freeDrawingBrush.inkAmount = value;
+          });
+        gui.add(gui, "save");
+        gui.add(gui, "clear");
+      };
+    </script>
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+    <script src="lib/fabric.min.js"></script>
+    <script src="lib/fabric-brush.min.js"></script>
+    <script src="lib/dat.gui.min.js"></script>
+  </body>
+</html>
