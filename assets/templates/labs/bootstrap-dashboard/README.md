@@ -29,30 +29,6 @@ Quick start options:
 - Clone the repo: `git clone https://github.com/creativetimofficial/light-bootstrap-dashboard.git`.
 
 
-### What's included
-
-Within the download you'll find the following directories and files:
-
-```
-x_lbd_free/
-├── assets/
-|   ├── css/
-|   ├── js/
-|   ├── fonts/
-|   └── img/
-├── dashboard.html
-├── CHANGELOG.md
-├── documentation
-├── icons.html
-├── maps.html
-├── notifications.html
-├── table.html
-├── template.html
-├── typography.html
-├── upgrade.html
-└── user.html
-
-```
 ### License
 
 - Copyright 2017 Creative Tim (http://www.creative-tim.com)
