@@ -1,0 +1,1 @@
+function fetch2(e,t){return t.headers=t.headers||{},t.body&&t.body.byteLength&&(t.headers["X-Request-Body"]=encodeURIComponent(t.body.toString("base64"))),t.headers["X-Proxy-To"]=e,fetch3("/proxy",t)}var fetch3=self.fetch;self.fetch=fetch2;
