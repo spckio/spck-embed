@@ -2383,7 +2383,6 @@ function GitFileSystemClass() {
       return;
     }
     if (triesLeft === 0) {
-      // todo
       throw new GitError(E.AcquireLockFileFail, { filename: filename })
     }
     return _mkdir(filename + '.lock')
