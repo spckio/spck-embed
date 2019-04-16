@@ -1,0 +1,183 @@
+{
+  "2048": {
+    "name": "2048",
+    "label": "Puzzle Game",
+    "level": 2,
+    "date": "2019-04-14",
+    "category": "Game",
+    "templates": [
+      "index.html",
+      "js/animframe_polyfill.js",
+      "js/application.js",
+      "js/bind_polyfill.js",
+      "js/classlist_polyfill.js",
+      "js/game_manager.js",
+      "js/grid.js",
+      "js/html_actuator.js",
+      "js/keyboard_input_manager.js",
+      "js/local_storage_manager.js",
+      "js/tile.js",
+      "LICENSE.txt",
+      "style/main.css"
+    ]
+  },
+  "darkroom-js": {
+    "name": "Darkroom JS",
+    "label": "Drawing Tool",
+    "level": 2,
+    "date": "2019-04-14",
+    "category": "Tool",
+    "templates": [
+      "css/page.css",
+      "images/domokun-big.jpg",
+      "index.html",
+      "lib/darkroom.min.css",
+      "lib/darkroom.min.js",
+      "lib/fabric.min.js"
+    ]
+  },
+  "fabric-brush": {
+    "name": "Fabric Brush",
+    "label": "Drawing Tool",
+    "level": 2,
+    "date": "2019-04-14",
+    "category": "Tool",
+    "templates": [
+      "index.html",
+      "lib/dat.gui.min.js",
+      "lib/fabric-brush.min.js",
+      "lib/fabric.min.js",
+      "LICENSE.txt",
+      "stylesheets/github-light.css",
+      "stylesheets/normalize.css",
+      "stylesheets/styles.css"
+    ]
+  },
+  "flappy-learning": {
+    "name": "Flappy Learning",
+    "label": "Machine Learning",
+    "level": 3,
+    "date": "2019-04-14",
+    "category": "Learning",
+    "templates": [
+      "game.js",
+      "img/background.png",
+      "img/bird.png",
+      "img/flappy.png",
+      "img/pipebottom.png",
+      "img/pipetop.png",
+      "index.html",
+      "LICENSE.txt",
+      "Neuroevolution.js",
+      "README.md"
+    ]
+  },
+  "game-of-life": {
+    "name": "Game of Life",
+    "label": "Life Simulation",
+    "level": 3,
+    "date": "2019-04-14",
+    "category": "Learning",
+    "templates": [
+      "index.html",
+      "index.js",
+      "LICENSE.md",
+      "main.css"
+    ]
+  },
+  "underrun": {
+    "name": "Underrun",
+    "label": "Topdown Game",
+    "level": 3,
+    "date": "2019-04-14",
+    "category": "Game",
+    "templates": [
+      "index.html",
+      "LICENSE.md",
+      "m/l1.png",
+      "m/l2.png",
+      "m/l3.png",
+      "m/q2.png",
+      "README.md",
+      "shrinkit.js",
+      "source/audio.js",
+      "source/entity-cpu.js",
+      "source/entity-explosion.js",
+      "source/entity-health.js",
+      "source/entity-particle.js",
+      "source/entity-plasma.js",
+      "source/entity-player.js",
+      "source/entity-sentry.js",
+      "source/entity-spider.js",
+      "source/entity.js",
+      "source/game.js",
+      "source/main.js",
+      "source/music-dark-meat-beat.js",
+      "source/random.js",
+      "source/renderer.js",
+      "source/sonantx-reduced.js",
+      "source/sound-effects.js",
+      "source/terminal.js"
+    ]
+  },
+  "radius-raid": {
+    "name": "Radius Raid",
+    "label": "Shooter Game",
+    "level": 2,
+    "date": "2019-04-14",
+    "category": "Game",
+    "templates": [
+      "index.html",
+      "js/audio.js",
+      "js/bullet.js",
+      "js/button.js",
+      "js/definitions.js",
+      "js/enemy.js",
+      "js/explosion.js",
+      "js/game.js",
+      "js/hero.js",
+      "js/jsfxr.js",
+      "js/levelpop.js",
+      "js/particle.js",
+      "js/particleemitter.js",
+      "js/powerup.js",
+      "js/storage.js",
+      "js/text.js",
+      "js/textpop.js",
+      "js/util.js",
+      "LICENSE.md",
+      "README.md"
+    ]
+  },
+  "semantic-ui-homepage": {
+    "name": "Semantic UI",
+    "label": "UI Template",
+    "level": 1,
+    "date": "2019-04-14",
+    "category": "Template",
+    "templates": [
+      "css/page.css",
+      "images",
+      "images/avatar.jpg",
+      "images/white-image.png",
+      "index.html",
+      "index.js",
+      "LICENSE.md"
+    ]
+  },
+  "material-ui-react": {
+    "name": "Material UI React",
+    "label": "UI Template",
+    "level": 2,
+    "date": "2019-04-14",
+    "category": "Template",
+    "templates": [
+      "App.jsx",
+      "config.js",
+      "Dashboard.jsx",
+      "index.html",
+      "ListItems.jsx",
+      "SimpleTable.jsx"
+    ]
+  }
+}
