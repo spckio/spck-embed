@@ -1,1 +1,1 @@
-require(["worker"],function(){console.log("Starting language server")});
+require(["worker"],(function(){console.log("Starting language server")}));

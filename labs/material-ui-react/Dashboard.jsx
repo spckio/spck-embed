@@ -16,9 +16,9 @@ import {
 import { mainListItems, secondaryListItems } from './ListItems.jsx';
 import SimpleTable from './SimpleTable.jsx';
 
-const drawerWidth = 240;
+var drawerWidth = 240;
 
-const styles = theme => ({
+var styles = theme => ({
   root: {
     display: 'flex',
   },
@@ -109,7 +109,7 @@ class Dashboard extends React.Component {
   };
   
   render() {
-    const { classes } = this.props;
+    var { classes } = this.props;
     
     return (
       <React.Fragment>

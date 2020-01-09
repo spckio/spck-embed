@@ -6,7 +6,7 @@ import {
   ListSubheader,
 } from '@material-ui/core';
 
-export const mainListItems = (
+export var mainListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
@@ -41,7 +41,7 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = (
+export var secondaryListItems = (
   <div>
     <ListSubheader inset>Saved reports</ListSubheader>
     <ListItem button>

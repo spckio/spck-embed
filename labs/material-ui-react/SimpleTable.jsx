@@ -10,7 +10,7 @@ import {
   Paper
 } from '@material-ui/core';
 
-const styles = {
+var styles = {
   root: {
     width: '100%',
     overflowX: 'auto',
@@ -26,7 +26,7 @@ function createData(name, calories, fat, carbs, protein) {
   return { id, name, calories, fat, carbs, protein };
 }
 
-const data = [
+var data = [
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
   createData('Eclair', 262, 16.0, 24, 6.0),
@@ -35,7 +35,7 @@ const data = [
 ];
 
 function SimpleTable(props) {
-  const { classes } = props;
+  var { classes } = props;
   
   return (
     <Paper className={classes.root}>
