@@ -4,6 +4,7 @@
   "description": "Spck is an embeddable code editor designed for the web.",
   "module": "dist/index.js",
   "main": "dist/spck-embed.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gh-pages": "gh-pages -d builds/latest"
