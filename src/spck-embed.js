@@ -1,92 +1,160 @@
 var SpckEditor = function (element, origin) {
   if (typeof element === 'string') {
-    this.element = document.querySelector(element);
+    this.element = document.querySelector(element)
   }
   else if (isNode(element)) {
     this.element = element
   }
   else {
-    throw new Error('Argument "element" must be a selector string or a HTMLElement.');
+    throw new Error('Argument "element" must be a selector string or a HTMLElement.')
   }
 
-  element = this.element;
+  element = this.element
   if (element && element.contentWindow && element.contentWindow.postMessage) {
-    this.contentWindow = element.contentWindow;
+    this.contentWindow = element.contentWindow
   }
   else {
-    throw new Error('Argument "element" must be an IFRAME element.');
+    throw new Error('Argument "element" must be an IFRAME element.')
   }
 
-  this.origin = origin || 'https://embed.spck.io';
+  this.origin = origin || 'https://embed.spck.io'
+  this.handlers = {}
 
   function isNode(o) {
     return (
       typeof Node === "object" ? o instanceof Node :
         o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string"
-    );
+    )
   }
 }
 
 SpckEditor.prototype = {
-  connect: function (successCallback, errorCallback, options) {
-    options = options || {};
-    var maxTries = options.maxTries || 10;
-    var interval = options.interval || 500;
-    var origin = this.origin;
-    var contentWindow = this.contentWindow;
+  connect: function (options) {
+    options = options || {}
+    var maxTries = options.maxTries || 20
+    var interval = options.interval || 500
+    var origin = this.origin
+    var contentWindow = this.contentWindow
+    var handlers = this.handlers
 
-    errorCallback = errorCallback || function (err) {
-      throw new Error(err.message);
-    };
-
-    var tries = 0;
-    var intervalId = setInterval(function () {
-      if (tries >= maxTries) {
-        clearInterval(intervalId);
-        errorCallback({
-          id: 1,
-          message: 'Connection to iframe window failed: maximum tries exceeded.'
-        });
-        return;
+    return new Promise(function (resolve, reject) {
+      function error(err) {
+        reject(err)
       }
-      else {
-        tries++;
-        var channel;
 
-        try {
-          channel = new MessageChannel();
+      var tries = 0
+      var intervalId = setInterval(function () {
+        if (tries >= maxTries) {
+          clearInterval(intervalId)
+          error({
+            id: 1,
+            message: 'Connection to iframe window failed: maximum tries exceeded.'
+          })
+          return
         }
-        catch (e) {
-          clearInterval(intervalId);
-          errorCallback({
-            id: 2,
-            message: 'MessageChannel not supported.'
-          });
-          return;
-        }
+        else {
+          tries++
+          var channel
 
-        channel.port1.onmessage = function (e) {
-          if (e.data == 'connected') {
-            clearInterval(intervalId);
-            if (successCallback) successCallback(tries);
+          try {
+            channel = new MessageChannel()
           }
-        };
+          catch (e) {
+            clearInterval(intervalId)
+            error({
+              id: 2,
+              message: 'MessageChannel not supported.'
+            })
+            return
+          }
 
-        try {
-          contentWindow.postMessage('connect', origin, [channel.port2]);
+          channel.port1.onmessage = function (e) {
+            var data = e.data
+            if (data == 'connected') {
+              clearInterval(intervalId)
+              resolve({tries: tries})
+            } else if (data && data.action) {
+              var action = data.action
+              if (handlers[action]) {
+                handlers[action].apply(null, data.args)
+              }
+            }
+          }
+
+          channel.port1.onmessageerror = function () {
+            error({
+              id: 3,
+              message: 'An error occurred in the transport of connection message.'
+            })
+          }
+
+          try {
+            contentWindow.postMessage('connect', origin, [channel.port2])
+          }
+          catch (e) {
+            error({
+              id: 4,
+              message: e.message || e.toString()
+            })
+          }
         }
-        catch (e) { }
+      }, interval)
+    })
+  },
+
+  send: function (message) {
+    var self = this
+    return new Promise(function (resolve, reject) {
+      var channel = new MessageChannel()
+      channel.port1.onmessage = function (ev) {
+        resolve(ev.data)
       }
-    }, interval);
+      channel.port1.onmessageerror = function () {
+        reject()
+      }
+      self.contentWindow.postMessage(message, self.origin, [channel.port2])
+    })
   },
 
-  configure: function (config) {
-    this.contentWindow.postMessage(config, this.origin);
+  on: function (handlers) {
+    for (var action in handlers) {
+      if (handlers.hasOwnProperty(action)) {
+        this.handlers[action] = handlers[action]
+      }
+    }
   },
 
-  getText: function (callback) {
-    var channel = new MessageChannel();
-    channel.port1.onmessage = callback;
-    this.contentWindow.postMessage('text', this.origin, [channel.port2]);
+  get: function (prop) {
+    var self = this
+    return new Promise(function (resolve, reject) {
+      var channel = new MessageChannel()
+      channel.port1.onmessage = function (ev) {
+        resolve(ev.data)
+      }
+      channel.port1.onmessageerror = function () {
+        reject()
+      }
+      self.contentWindow.postMessage(prop, self.origin, [channel.port2])
+    })
+  },
+
+  getMode: function () {
+    return this.get('mode')
+  },
+
+  getPosition: function () {
+    return this.get('position')
+  },
+
+  getTabSize: function () {
+    return this.get('tabSize')
+  },
+
+  getText: function () {
+    return this.get('text')
+  },
+
+  getTheme: function () {
+    return this.get('theme')
   }
 }
