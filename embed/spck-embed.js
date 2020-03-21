@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.SpckEditor = factory();
+  }
+}(this, function() {
 var SpckEditor = function (element, origin) {
   if (typeof element === 'string') {
     this.element = document.querySelector(element)
@@ -40,8 +49,6 @@ SpckEditor.prototype = {
     return new Promise(function (resolve, reject) {
       function error(err) {
         reject(err)
-        if (onError) onError(err)
-        else throw new Error(err.message)
       }
 
       var tries = 0
@@ -160,3 +167,6 @@ SpckEditor.prototype = {
     return this.get('theme')
   }
 }
+
+return SpckEditor;
+}));
