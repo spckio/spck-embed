@@ -27,12 +27,12 @@
   },
   "homepage": "https://github.com/spckio/spck-embed#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "gh-pages": "^1.2.0",
+    "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.1",
     "gulp-umd": "^2.0.0",
-    "pump": "^3.0.0",
-    "gh-pages": "^1.2.0"
+    "pump": "^3.0.0"
   },
   "dependencies": {}
 }
