@@ -73,6 +73,9 @@ SpckEditor.prototype = {
             if (data == 'connected') {
               clearInterval(intervalId)
               resolve({tries: tries})
+            } else if (data && data.error) {
+              clearInterval(intervalId)
+              error(new Error(data.error.message))
             } else if (data && data.action) {
               var action = data.action
               if (handlers[action]) {
@@ -82,6 +85,7 @@ SpckEditor.prototype = {
           }
 
           channel.port1.onmessageerror = function () {
+            clearInterval(intervalId)
             error({
               id: 3,
               message: 'An error occurred in the transport of connection message.'
@@ -92,6 +96,7 @@ SpckEditor.prototype = {
             contentWindow.postMessage('connect', origin, [channel.port2])
           }
           catch (e) {
+            clearInterval(intervalId)
             error({
               id: 4,
               message: e.message || e.toString()
@@ -107,10 +112,13 @@ SpckEditor.prototype = {
     return new Promise(function (resolve, reject) {
       var channel = new MessageChannel()
       channel.port1.onmessage = function (ev) {
-        resolve(ev.data)
+        channel.port1.close()
+        if (ev.data && ev.data.error) reject(new Error(ev.data.error.message))
+        else resolve(ev.data)
       }
       channel.port1.onmessageerror = function () {
-        reject()
+        channel.port1.close()
+        reject(new Error('An error occurred in the transport of editor message.'))
       }
       self.contentWindow.postMessage(message, self.origin, [channel.port2])
     })
@@ -129,10 +137,13 @@ SpckEditor.prototype = {
     return new Promise(function (resolve, reject) {
       var channel = new MessageChannel()
       channel.port1.onmessage = function (ev) {
-        resolve(ev.data)
+        channel.port1.close()
+        if (ev.data && ev.data.error) reject(new Error(ev.data.error.message))
+        else resolve(ev.data)
       }
       channel.port1.onmessageerror = function () {
-        reject()
+        channel.port1.close()
+        reject(new Error('An error occurred in the transport of editor message.'))
       }
       self.contentWindow.postMessage(prop, self.origin, [channel.port2])
     })

@@ -1,24 +1,21 @@
 # Spck-Embed
 
-[Spck Editor](https://spck.io) is an embeddable online code editor, optimized for the web and building web projects. This library builds is a wrapper around the `iframe` messaging interface provided by the editor and allows you to control the editor for your needs.
+[Spck Editor](https://spck.io) is an embeddable online code editor, optimized for the web and building web projects. This library is a wrapper around the `iframe` messaging interface provided by the editor and allows you to control the editor for your needs.
 
 Use cases for this library include:
 - Embedding editable demos in your website
-- Creating edtor tools (i.e. minifiers, beautifiers, formatters, source-mapping, etc.)
+- Creating editor tools (i.e. minifiers, beautifiers, formatters, source-mapping, etc.)
 - Creating interactive tutorials
 
 *If you like this project please leave a star. Your support is greatly appreciated.*
 
 ## Getting Started
 
-You have two options to install the library:
-#### 1. Install with [bower](http://bower.io):
-```bower install spck-embed```
+Install the corrected wrapper from this repository with `npm install /path/to/createjsapp/embed`, or use the script served by the embedded editor.
 
-#### 2. Install with [npm](https://www.npmjs.com):
-```npm install spck-embed```
+The registry package `spck-embed@0.2.0` predates these fixes.
 
-#### 3. Load the library directly from the web:
+Load the library from your deployed embed build:
 ```<script src="https://embed.spck.io/embed/spck-embed.min.js"></script>```
 
 ## Usage
@@ -56,31 +53,7 @@ var editor = new SpckEditor('#editor');
 // Or by passing an HTML element
 var editor = new SpckEditor(document.getElementById('editor'));
 // Or with any query selector
-var editor = new SpckEditor(document.getElementById('iframe'));
-
-// Connect and handle with a callback
-editor.connect(function (connected) {
-  // Number of tries it took to connect
-  console.log(connected.tries)
-
-  editor.send({
-    project: 'Simple Project',  // Project name
-    open: 'index.js',  // Open file
-    files: [  // Create following files
-      {path: 'index.js', text: 'console.log("entry point")'}
-    ]
-  }, function () {
-    // Success
-  }, function () {
-    // Failure
-  })
-}, function () {
-  // Handle connection failure
-  console.log('connection failed')
-}, {
-  maxTries: 20,  // Maximum number of attempts to wait for iframe to load
-  interval: 500  // Interval between attempts
-});
+var editor = new SpckEditor('iframe');
 
 // Or handle with a promise
 editor.connect()
@@ -118,7 +91,7 @@ define(['SpckEditor'] , function (SpckEditor) {
 
 #### CommonJS
 ```javascript
-var SpckEditor = require('SpckEditor');
+var {SpckEditor} = require('spck-embed');
 var editor = new SpckEditor('#editor');
 // Do stuff with editor here
 ```
@@ -140,9 +113,9 @@ Certain cosmetic features can be set by the iframe's `src` url by using query pa
 
 |URL Parameter|Optional|Description|
 |:--- |:--- |:--- |
-|`files`|Yes|If present, will display a side menu for file management.|
-|`preview`|Yes|If present, will display a Run button for previewing code output.|
-|`theme`|Yes|Changes the editor theme. Options: chrome, xcode, ayu-light, dracula, monokai, ayu-mirage.|
+|`files`|Yes|Enables the files menu when present, unless set to `0`. Hidden by default.|
+|`preview`|Yes|Enables preview when present, unless set to `0`. Hidden by default.|
+|`theme`|Yes|Changes the editor theme. Options: chrome, xcode, ayu-light, dracula, monokai, ayu-mirage, one-light, one-dark, github-dark.|
 |`project`|Yes|The name of the project to create.|
 #### Example
 
@@ -183,17 +156,22 @@ send(msg: {
   clearProjects: Boolean | [String]
   files: [{path: String, text: String?, url: String?}],
   appendFiles: Boolean,
-  open: String,
+  open: String | [String],
   editor: {
     mode: String,
     text: String,
     fontSize: String,
     tabSize: Number,
     position: {row: Number, column: Number},
-    gutter: Boolean
+    gutter: Boolean,
+    theme: String
   }
-}): Promise
+}): Promise<{success: true}>
 ```
+
+`send()` resolves after all requested operations complete and rejects with an `Error` when processing fails. Call `connect()` first. The API supports promises only; callback-style overloads are not supported.
+
+Projects are stored under a separate root for each parent origin, including its scheme and port. Existing projects in the old shared root are not migrated. Project and file paths must remain inside this root.
 
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
@@ -201,7 +179,7 @@ send(msg: {
 |`msg.clearProjects`|Yes|If true, clear all projects in the domain; or if an array of project names, then delete the list of projects.|
 |`msg.files`|Yes|List of files to create in the project, if `url` is specified instead of `text`, the contents will be fetched instead.|
 |`msg.appendFiles`|Yes|Keep existing project files, append/overwrite the files.|
-|`msg.open`|Yes|Opens this file in the project.|
+|`msg.open`|Yes|Opens a project-relative file, or an array of files (the first becomes active).|
 |`msg.editor`|Yes|Configures the editor window directly.|
 
 #### Example
@@ -218,14 +196,14 @@ editor.send({
     }
   ],
   // Keep existing files in the project, append/overwrite new files
-  appendFiles: false,
+  appendFiles: true,
   // Open this file
-  open: 'index.js',
+  open: 'src/index.js',
   // Create a project
   project: 'ProjectA',
   editor: {
     // Sets the language mode
-    mode: 'javascript' // 'typescript, javascript, css, less, scss, html, etc.',
+    mode: 'javascript', // 'typescript, javascript, css, less, scss, html, etc.',
     // Sets the editor current text
     text: '...',
     // Sets the editor font size
@@ -254,11 +232,11 @@ editor.on(handlers: {
 
 |Parameter|Optional|Description|
 |:--- |:--- |:--- |
-|`handlers.textChange`|Yes|Detect whenever the editor text is changed.|
-|`handlers.positionChange`|Yes|Detect when the cursor position is changed.|
-|`handlers.selectionChange`|Yes|Detect when the text selection is changed.|
-|`handlers.fileOpen`|Yes|Detect when a new file is opened.|
-|`handlers.projectOpen`|Yes|Detect when a project is opened.|
+|`handlers.textChange`|Yes|Receives `(text, path)` when text changes; `path` is the full internal path or `null` for a blank session.|
+|`handlers.positionChange`|Yes|Receives `{row, column}` when the cursor moves. Coordinates are zero-based.|
+|`handlers.selectionChange`|Yes|Receives `{selectedText, selectionRanges}`, with ranges containing `start` and `end` positions.|
+|`handlers.fileOpen`|Yes|Receives the full internal file path when a file is opened.|
+|`handlers.projectOpen`|Yes|Receives the project object, including its `dir`, when a project is opened.|
 |`handlers.projectClose`|Yes|Detect when a project is closed.|
 |`handlers.blur`|Yes|Detect when editor blurs focus.|
 |`handlers.focus`|Yes|Detect when editor focuses.|
@@ -270,7 +248,7 @@ getMode(): Promise<String>
 
 #### getPosition
 ```javascript
-getPosition(): Promise<{row: Number, coluumn: Number}>
+getPosition(): Promise<{row: Number, column: Number}>
 ```
 
 #### getTabSize

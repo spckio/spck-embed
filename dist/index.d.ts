@@ -1,64 +1,72 @@
 export class SpckEditor {
-  constructor(iframe: Node | string);
-
-  connect(opts: ConnectOptions): Promise<ConnectMessage>;
-  get(prop: string): Promise<any>;
-  send(message: Message): Promise<any>;
-  on(handlers: HandlerConfig): void
+  constructor(iframe: Node | string, origin?: string);
+  connect(opts?: ConnectOptions): Promise<ConnectMessage>;
+  get(prop: string): Promise<unknown>;
+  send(message: Message): Promise<{ success: true }>;
+  on(handlers: HandlerConfig): void;
   getText(): Promise<string>;
   getMode(): Promise<string>;
   getPosition(): Promise<EditorPosition>;
+  getTabSize(): Promise<number>;
   getTheme(): Promise<string>;
 }
 
-interface Message {
+export interface Message {
   project?: string;
-  clearProjects?: [string] | boolean;
-  files?: [FileConfig];
-  appendFiles?: Boolean;
-  open?: string;
+  clearProjects?: string[] | boolean;
+  files?: FileConfig[];
+  appendFiles?: boolean;
+  open?: string | string[];
   editor?: EditorConfig;
 }
 
-interface HandlerConfig {
-  textChange: (text: string) => void;
-  selectionChange: ({selectedText: string, selectionRanges: [SelectionRange]}) => void;
-  positionChange: (position: EditorPosition) => void;
-  fileOpen: (path: string) => void;
-  projectOpen: (project: string) => void;
-  projectClose: () => void;
-  blur: () => void;
-  focus: () => void;
+export interface EmbeddedProject {
+  dir: string;
+  [key: string]: unknown;
 }
 
-interface ConnectOptions {
+export interface HandlerConfig {
+  textChange?: (text: string, path: string | null) => void;
+  selectionChange?: (selection: { selectedText: string; selectionRanges: SelectionRange[] }) => void;
+  positionChange?: (position: EditorPosition) => void;
+  fileOpen?: (path: string) => void;
+  projectOpen?: (project: EmbeddedProject) => void;
+  projectClose?: () => void;
+  blur?: () => void;
+  focus?: () => void;
+}
+
+export interface ConnectOptions {
   maxTries?: number;
   interval?: number;
 }
 
-interface FileConfig {
+export interface FileConfig {
   path: string;
   text?: string;
   url?: string;
 }
 
-interface EditorConfig {
+export interface EditorConfig {
   mode?: string;
+  text?: string;
+  fontSize?: string;
   tabSize?: number;
   theme?: string;
-  position?: EditorConfig;
+  position?: EditorPosition;
+  gutter?: boolean;
 }
 
-interface SelectionRange {
+export interface SelectionRange {
   start: EditorPosition;
   end: EditorPosition;
 }
 
-interface EditorPosition {
+export interface EditorPosition {
   row: number;
   column: number;
 }
 
-interface ConnectMessage {
-  tries: number
+export interface ConnectMessage {
+  tries: number;
 }

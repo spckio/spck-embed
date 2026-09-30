@@ -27,7 +27,7 @@ function buildProd (cb) {
   ], cb);
 }
 
-const build = gulp.parallel(buildDebug, buildProd)
+const build = gulp.series(buildDebug, buildProd)
 
 module.exports = {
   buildDebug,
