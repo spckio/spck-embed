@@ -9,6 +9,10 @@ Use cases for this library include:
 
 *If you like this project please leave a star. Your support is greatly appreciated.*
 
+## Official Documentation
+
+Read [Embedding the Editor](https://docs.spck.io/en/editor-embed) for a complete quick start, project and file examples, event payloads, initial configuration, custom origins, and troubleshooting.
+
 ## Getting Started
 
 Install the corrected wrapper from this repository with `npm install /path/to/createjsapp/embed`, or use the script served by the embedded editor.
