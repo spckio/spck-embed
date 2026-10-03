@@ -6,8 +6,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gh-pages": "gh-pages -d builds/latest"
+    "build": "gulp build",
+    "build:prod": "gulp build",
+    "build:debug": "gulp buildDebug",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,8 @@
     "javascript",
     "editor",
     "demo",
-    "code"
+    "code",
+    "spck"
   ],
   "author": "Zeb Zhao",
   "license": "MIT",
@@ -28,8 +31,7 @@
   },
   "homepage": "https://github.com/spckio/spck-embed#readme",
   "devDependencies": {
-    "gh-pages": "^1.2.0",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.1",
     "gulp-umd": "^2.0.0",
